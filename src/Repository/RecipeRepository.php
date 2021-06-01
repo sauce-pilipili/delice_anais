@@ -4,6 +4,8 @@ namespace App\Repository;
 
 use App\Entity\Recipe;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -19,22 +21,31 @@ class RecipeRepository extends ServiceEntityRepository
         parent::__construct($registry, Recipe::class);
     }
 
-    // /**
-    //  * @return Recipe[] Returns an array of Recipe objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+    * @return Recipe[] Returns an array of Recipe objects
+    */
+
+    public function findByByCategory($value)
     {
         return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
+            ->andWhere('r.category = :val')
             ->setParameter('val', $value)
-            ->orderBy('r.id', 'ASC')
-            ->setMaxResults(10)
+            ->orderBy('r.Name', 'ASC')
             ->getQuery()
             ->getResult()
         ;
     }
-    */
+    
+    public function hasardcount()
+    {
+        try {
+            return $this->createQueryBuilder('r')
+                ->select('count(r.id)')
+                ->getQuery()->getSingleScalarResult();
+        } catch (NoResultException $e) {
+        } catch (NonUniqueResultException $e) {
+        }
+    }
 
     /*
     public function findOneBySomeField($value): ?Recipe

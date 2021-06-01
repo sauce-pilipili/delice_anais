@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Recipe{% endblock %}
+{% block title %}{{ recipe.name }}{% endblock %}
 
 {% block body %}
 
@@ -18,7 +18,7 @@
                     <hr class="my-4">
                     {% set i = 1 %}
                     {% for d in recipe.directions %}
-                             <strong>{{ i }}</strong><p>{{ d.toDO }}</p>
+                        <strong>{{ i }}</strong><p>{{ d.toDO }}</p>
                         {% set i = i+ 1 %}
                     {% endfor %}
                     <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="{{ path('cooking')}}">

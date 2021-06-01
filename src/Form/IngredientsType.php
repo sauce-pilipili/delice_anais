@@ -25,8 +25,9 @@ class IngredientsType extends AbstractType
                     'g' => 'g',
                     'cl' => 'cl',
                     'ml' => 'ml',
-                    'pièces'=>'pièces'
-                ]
+                    'pièces'=>'pièces',
+                    'C.a.café' => 'C.a.café',
+                    'C.a.soupe'=>'C.a.soupe']
             ])
             ->add('quantity', NumberType::class,[
                 'label'=>'quantité'

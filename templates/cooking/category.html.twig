@@ -7,7 +7,7 @@
                 {% for r in recipe %}
                     <div class="post-preview">
 
-                        <a href="{{ path('cooking_detail',{'id': r.id}) }}">
+                        <a href="{{ path('recipe_show',{'id': r.id}) }}">
                             <h2 class="post-title">{{ r.Name }}</h2>
                             <h3 class="post-subtitle">{{ r.machine }}</h3>
                         </a>
@@ -21,8 +21,16 @@
                     <hr class="my-4"/>
                 {% endfor %}
                 <!-- Pager-->
-
+                <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="#!">
+                        Toutes les recettes</a></div>
             </div>
         </div>
     </div>
+
+
+{% endblock %}
+{% block javascripts %}
+
+
+
 {% endblock %}

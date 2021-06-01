@@ -7,6 +7,8 @@
         {{ form_widget(form.duration) }}
         {{ form_label(form.machine, 'Materiel') }}
         {{ form_widget(form.machine) }}
+        {{ form_label(form.category, 'catégorie') }}
+        {{ form_widget(form.category) }}
         <hr>
         {{ form_label(form.ingredients, 'ingredients') }}
         <div id="ingredient" data-prototype="{{ form_row(form.ingredients.vars.prototype)|e('html_attr') }}">

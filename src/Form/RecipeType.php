@@ -6,6 +6,7 @@ use App\Entity\Recipe;
 
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -19,8 +20,18 @@ class RecipeType extends AbstractType
     {
         $builder
             ->add('Name', TextType::class)
-            ->add('duration',TimeType::class)
+            ->add('duration',TimeType::class,[
+                'attr'=>['type'=>time()]
+            ])
             ->add('machine')
+            ->add('category',ChoiceType::class,[
+                'label'=>'unité de mesure',
+                'choices' =>[
+                    'entrée'=> 'entrée',
+                    'plat' => 'plat',
+                    'dessert' => 'dessert',
+                    ]
+            ])
             ->add('ingredients', CollectionType::class,[
                 'label'=>false,
                 'entry_type' => IngredientsType::class,

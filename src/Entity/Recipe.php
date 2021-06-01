@@ -49,6 +49,11 @@ class Recipe
      */
     private $machine;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $category;
+
     public function __construct()
     {
         $this->ingredients = new ArrayCollection();
@@ -164,6 +169,18 @@ class Recipe
     public function setMachine(string $machine): self
     {
         $this->machine = $machine;
+
+        return $this;
+    }
+
+    public function getCategory(): ?string
+    {
+        return $this->category;
+    }
+
+    public function setCategory(string $category): self
+    {
+        $this->category = $category;
 
         return $this;
     }
