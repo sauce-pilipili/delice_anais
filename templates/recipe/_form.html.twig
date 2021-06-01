@@ -1,0 +1,44 @@
+
+
+        {{ form_start(form) }}
+        {{ form_label(form.Name, 'Nom de la recette') }}
+        {{ form_widget(form.Name) }}
+        {{ form_label(form.duration, 'Temp de préparation') }}
+        {{ form_widget(form.duration) }}
+        {{ form_label(form.machine, 'Materiel') }}
+        {{ form_widget(form.machine) }}
+        <hr>
+        {{ form_label(form.ingredients, 'ingredients') }}
+        <div id="ingredient" data-prototype="{{ form_row(form.ingredients.vars.prototype)|e('html_attr') }}">
+            {% for row in form.ingredients %}
+                <div class="panel">
+                    <div class="panel-heading">
+                        <strong>{{ form_row(row.names) }}</strong>
+                    </div>
+                    <div class="panel-body">
+
+                        {{ form_row(row.sort) }}
+                        {{ form_row(row.quantity) }}
+                    </div>
+                </div>
+                <hr>
+            {% endfor %}
+        </div>
+
+        <hr>
+        {{ form_label(form.directions, 'étapes') }}
+        <div id="directions" data-prototype="{{ form_row(form.directions.vars.prototype)|e('html_attr') }}">
+            {% for dir in form.directions %}
+                <div class="panel">
+                    <div class="panel-heading">
+                        {{ form_row(dir.toDO) }}
+                    </div>
+                </div>
+                <hr>
+            {% endfor %}
+        </div>
+        <hr>
+        {{ form_end(form) }}
+
+
+

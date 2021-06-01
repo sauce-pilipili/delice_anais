@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}NNouvelle recettes{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="jumbotron">
+    <h1>Creer une nouvelle recette</h1>
+
+    {{ include('recipe/_form.html.twig') }}
+
+    <a href="{{ path('recipe_index') }}">retour à la liste</a>
+    </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+ <script src="{{ asset('js/recipe_content_ingredient.js') }}"></script>
+
+{% endblock %}
