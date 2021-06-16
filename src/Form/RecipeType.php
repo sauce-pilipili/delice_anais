@@ -27,9 +27,9 @@ class RecipeType extends AbstractType
             ->add('category',ChoiceType::class,[
                 'label'=>'unité de mesure',
                 'choices' =>[
-                    'entrée'=> 'entrée',
-                    'plat' => 'plat',
-                    'dessert' => 'dessert',
+                    'entrées'=> 'entrées',
+                    'plats' => 'plats',
+                    'desserts' => 'desserts',
                     ]
             ])
             ->add('ingredients', CollectionType::class,[

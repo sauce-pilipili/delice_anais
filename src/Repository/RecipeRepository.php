@@ -40,11 +40,21 @@ class RecipeRepository extends ServiceEntityRepository
     {
         try {
             return $this->createQueryBuilder('r')
-                ->select('count(r.id)')
+            ->select('count(r.id)')
                 ->getQuery()->getSingleScalarResult();
         } catch (NoResultException $e) {
         } catch (NonUniqueResultException $e) {
         }
+    }
+
+
+    public function findbar($data){
+        return $this->createQueryBuilder('r')
+            ->andWhere('r.Name= : val')
+            ->setParameter('val' ,'%'.$data. '%')
+            ->orderBy('r.createdDate','DESC')
+            ->getQuery()
+            ->getResult();
     }
 
     /*

@@ -54,6 +54,11 @@ class Recipe
      */
     private $category;
 
+    /**
+     * @ORM\OneToOne(targetEntity=ImageRecipe::class, inversedBy="recipe", cascade={"persist", "remove"})
+     */
+    private $image;
+
     public function __construct()
     {
         $this->ingredients = new ArrayCollection();
@@ -181,6 +186,18 @@ class Recipe
     public function setCategory(string $category): self
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    public function getImage(): ?ImageRecipe
+    {
+        return $this->image;
+    }
+
+    public function setImage(?ImageRecipe $image): self
+    {
+        $this->image = $image;
 
         return $this;
     }

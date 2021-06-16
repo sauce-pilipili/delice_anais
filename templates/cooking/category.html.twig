@@ -1,4 +1,6 @@
 {% extends 'base.html.twig' %}
+
+{% block title %}Les {% for r in recipe |slice(0,1)%} {{ r.category }} {% endfor %}d'anaïs{% endblock %}
 {% block body %}
     <div class="container px-4 px-lg-5">
         <div class="row gx-4 gx-lg-5 justify-content-center">
@@ -8,9 +10,11 @@
                     <div class="post-preview">
 
                         <a href="{{ path('recipe_show',{'id': r.id}) }}">
+                            <img src="{{ asset('uploads/'~r.image.name) }}">
                             <h2 class="post-title">{{ r.Name }}</h2>
                             <h3 class="post-subtitle">{{ r.machine }}</h3>
                         </a>
+
                         <p class="post-meta">
                             Publié le: {{ r.createdDate | date("d/m/y", "Europe/Paris") }} dans la
                             catégorie {{ r.category }}
@@ -20,8 +24,13 @@
 
                     <hr class="my-4"/>
                 {% endfor %}
+                {% if recipe is empty %}
+                <div class="alert alert-warning">
+                    <p class="my-3">Aucune recettes </p>
+                </div>
+                {% endif %}
                 <!-- Pager-->
-                <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="#!">
+                <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="{{path('cooking')}}">
                         Toutes les recettes</a></div>
             </div>
         </div>
@@ -30,7 +39,4 @@
 
 {% endblock %}
 {% block javascripts %}
-
-
-
 {% endblock %}

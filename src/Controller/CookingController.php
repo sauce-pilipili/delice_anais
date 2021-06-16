@@ -6,7 +6,10 @@ use App\Entity\Recipe;
 use App\Repository\RecipeRepository;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -15,29 +18,28 @@ class CookingController extends AbstractController
     /**
      * @Route("/", name="cooking")
      */
-    public function index(RecipeRepository $recipeRepository): Response
+    public function index(Request $request, RecipeRepository $recipeRepository, PaginatorInterface $paginator): Response
     {
-        $recipe = $recipeRepository->findAll();
-
+        $data = $recipeRepository->findAll();
+        $recipe = $paginator->paginate($data, $request->query->getInt('page', 1), 12);
 
         return $this->render('cooking/index.html.twig', [
-            'controller_name' => 'CookingController',
-            'recipe'=> $recipe
+            'recipe' => $recipe
         ]);
     }
 
     /**
      * @route("/category/{id}", name="cooking_category", methods={"GET"})
      */
-    public function category(RecipeRepository $recipeRepository,$id): Response
+    public function category(RecipeRepository $recipeRepository, $id): Response
     {
         $recipe = $recipeRepository->findByByCategory($id);
 
         return $this->render('cooking/category.html.twig', [
-            'controller_name' => 'CookingController',
-            'recipe'=> $recipe
+            'recipe' => $recipe
         ]);
     }
+
     /**
      * @Route("/detail{id}", name="cooking_detail", methods={"GET"})
      */
@@ -54,14 +56,50 @@ class CookingController extends AbstractController
      */
     public function hasardshow(RecipeRepository $recipeRepository): Response
     {
-        $number = $recipeRepository->hasardcount();
-        $id = random_int(1,$number);
-        $recipe = $recipeRepository->find($id);
-
-
-
+        $recipe = $recipeRepository->findAll();
+        $re = [];
+        $i = 0;
+        foreach ($recipe as $r) {
+            $re[$i] = $r->getId();
+            $i++;
+        }
+        $lucky = array_rand($re, 1);
+        $recipelucky = $recipeRepository->find($re[$lucky]);
         return $this->render('cooking/lucky.html.twig', [
-            'recipe' => $recipe,
+            'recipe' => $recipelucky,
         ]);
     }
+
+    /**
+     * barre de recherche ajax
+     *
+     * @Route("/search/{search}", name="ajax_search", methods={"GET"})
+
+     */
+    public function rechercheAjax($search,Request $request, RecipeRepository $recipeRepository)
+    {
+        $i=$search;
+        $motClef = $request->get('Q');
+
+        $data = $recipeRepository->findbar($motClef);
+
+        if (!$data) {
+            $result['result']['error'] = "Aucun résultat";
+        } else {
+            $result['result'] = $this->getRealEntities($data);
+        }
+//        return new Response(json_encode($result));
+
+    }
+
+    public function getRealEntities($data)
+    {
+
+        foreach ($data as $d) {
+            $realEntities[$d->getId()] = $d->getFoo();
+        }
+        return $realEntities;
+    }
+
+
 }

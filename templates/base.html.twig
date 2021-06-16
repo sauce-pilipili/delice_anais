@@ -9,10 +9,7 @@
           integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
     {% block stylesheets %}
-
     {% endblock %}
-
-
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
@@ -26,27 +23,30 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ms-auto py-4 py-lg-0">
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle px-lg-3 py-3 py-lg-4" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle px-lg-3 py-3 py-lg-4" href="#" id="navbarDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Catégory
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="{{ path('cooking_category',{'id': "entrée"}) }}">Entrée</a>
+                        <a class="dropdown-item" href="{{ path('cooking_category',{'id': "entrées"}) }}">Entrées</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="{{ path('cooking_category',{'id': "plat"}) }}">Plats</a>
+                        <a class="dropdown-item" href="{{ path('cooking_category',{'id': "plats"}) }}">Plats</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="{{ path('cooking_category',{'id': "dessert"}) }}">Dessert</a>
+                        <a class="dropdown-item" href="{{ path('cooking_category',{'id': "desserts"}) }}">Desserts</a>
                     </div>
                 </li>
-                <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{{ path('cooking') }}">Toute les recettes</a>
+                <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{{ path('cooking') }}">Toute les
+                        recettes</a>
                 </li>
-                <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{{ path('cooking_lucky') }}">Une recette au
+                <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{{ path('cooking_lucky') }}">Une
+                        recette au
                         hasard?</a></li>
 
             </ul>
             <form>
                 <div class="input-group rounded">
-                    <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search"
-                           aria-describedby="search-addon" />
+                    <input type="search" id="searchbarre" class="form-control rounded" placeholder="Rechercher" aria-label="Search"
+                           aria-describedby="search-addon"/>
                     <span class="input-group-text" id="search-addon">
     <i class="fas fa-search"></i>
   </span>
@@ -67,17 +67,24 @@
         </div>
     </div>
 </header>
+
 {% block body %}{% endblock %}
 {{ include('_inc/_footer.html.twig') }}
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
         crossorigin="anonymous"></script>
-<script src="{{ asset('js/scripts.js') }}"
-<script src="{{ asset('js/recipe_content_directions.js') }}"></script>
-<script src="{{ asset('js/recipe_content_ingredients.js') }}"></script>
+<script src="{{ asset('js/scripts.js') }}"></script>
+
+<script src="{{ asset('js/recipe_ajax.js') }}"></script>
 {% block javascripts %}
 
 {% endblock %}
