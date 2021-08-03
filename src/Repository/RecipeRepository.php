@@ -4,8 +4,6 @@ namespace App\Repository;
 
 use App\Entity\Recipe;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\NonUniqueResultException;
-use Doctrine\ORM\NoResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -25,7 +23,7 @@ class RecipeRepository extends ServiceEntityRepository
     * @return Recipe[] Returns an array of Recipe objects
     */
 
-    public function findByByCategory($value)
+    public function findByByCategory($value) : array
     {
         return $this->createQueryBuilder('r')
             ->andWhere('r.category = :val')
@@ -36,15 +34,16 @@ class RecipeRepository extends ServiceEntityRepository
         ;
     }
     
-    public function hasardcount()
+    public function findallPublished()
     {
-        try {
-            return $this->createQueryBuilder('r')
-            ->select('count(r.id)')
-                ->getQuery()->getSingleScalarResult();
-        } catch (NoResultException $e) {
-        } catch (NonUniqueResultException $e) {
-        }
+        return $this->createQueryBuilder('r')
+            ->select('r','i','t','ing')
+            ->join('r.ingredients','ing')
+            ->join('r.directions','t')
+            ->join('r.image', 'i')
+            ->orderBy('r.createdDate', 'DESC')
+            ->getQuery()
+            ->getResult();
     }
 
 

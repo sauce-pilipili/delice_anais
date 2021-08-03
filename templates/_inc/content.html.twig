@@ -1,0 +1,17 @@
+{% for r in recipe %}
+    <div class="post-preview">
+        <a href="{{ path('cooking_detail',{'id': r.id}) }}">
+            <img src="{{ asset('uploads/'~r.image.name) }}" style="max-width:640px;max-height: 480px">
+
+            <h2 class="post-title">{{ r.Name }}</h2>
+            <h3 class="post-subtitle">{{ r.machine }}</h3>
+        </a>
+        <p class="post-meta">
+            Publié le: {{ r.createdDate | date("d/m/y", "Europe/Paris") }} dans la
+            catégorie {{ r.category }}
+        </p>
+    </div>
+    <!-- Divider-->
+
+    <hr class="my-4"/>
+{% endfor %}

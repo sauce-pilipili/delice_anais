@@ -1,46 +1,86 @@
-
-
-        {{ form_start(form) }}
+{{ form_start(form) }}
+<div class="row">
+    <div class="col-lg-6">
         {{ form_label(form.Name, 'Nom de la recette') }}
         {{ form_widget(form.Name) }}
+
         {{ form_label(form.duration, 'Temp de préparation') }}
         {{ form_widget(form.duration) }}
+
         {{ form_label(form.machine, 'Materiel') }}
         {{ form_widget(form.machine) }}
         {{ form_label(form.category, 'catégorie') }}
         {{ form_widget(form.category) }}
-        <hr>
-        {{ form_label(form.ingredients, 'ingredients') }}
-        <div id="ingredient" data-prototype="{{ form_row(form.ingredients.vars.prototype)|e('html_attr') }}">
-            {% for row in form.ingredients %}
-                <div class="panel">
-                    <div class="panel-heading">
-                        <strong>{{ form_row(row.names) }}</strong>
-                    </div>
-                    <div class="panel-body">
 
-                        {{ form_row(row.sort) }}
-                        {{ form_row(row.quantity) }}
-                    </div>
-                </div>
-                <hr>
-            {% endfor %}
-        </div>
 
-        <hr>
-        {{ form_label(form.directions, 'étapes') }}
-        <div id="directions" data-prototype="{{ form_row(form.directions.vars.prototype)|e('html_attr') }}">
-            {% for dir in form.directions %}
-                <div class="panel">
-                    <div class="panel-heading">
-                        {{ form_row(dir.toDO) }}
-                    </div>
-                </div>
-                <hr>
-            {% endfor %}
+    </div>
+    <div class="col-lg-6">
+{{ form_label(form.image,'image de la recette') }}
+{{ form_widget(form.image,{'attr': {'class': 'article_image', 'onchange':"handleFiles(files)",'id' : 'upload', 'multiple name': 'file'}}) }}
+        <div class="preview-image"><label for="upload"><span id="preview"></span></label></div>
+    </div>
+</div>
+
+<hr>
+{{ form_label(form.ingredients, 'ingredients') }}
+<div id="ingredient" data-prototype="{{ form_row(form.ingredients.vars.prototype)|e('html_attr') }}">
+    {% for row in form.ingredients %}
+        <div class="panel">
+            <div class="panel-heading">
+                <strong>{{ form_row(row.names) }}</strong>
+            </div>
+            <div class="panel-body">
+                {{ form_row(row.sort) }}
+                {{ form_row(row.quantity) }}
+            </div>
         </div>
         <hr>
-        {{ form_end(form) }}
+    {% endfor %}
+</div>
+
+<hr>
+{{ form_label(form.directions, 'étapes') }}
+<div id="directions" data-prototype="{{ form_row(form.directions.vars.prototype)|e('html_attr') }}">
+    {% for dir in form.directions %}
+        <div class="panel">
+            <div class="panel-heading">
+                {{ form_row(dir.toDO) }}
+            </div>
+        </div>
+        <hr>
+    {% endfor %}
+</div>
+<hr>
+{{ form_end(form) }}
 
 
+<script>
+    function handleFiles(files) {
+        var imageType = /^image\//;
+        for (var i = 0; i < files.length; i++) {
+            var file = files[i];
+            if (!imageType.test(file.type)) {
+                alert("veuillez sélectionner une image");
+            } else {
+                if (i == 0) {
+                    preview.innerHTML = '';
+                }
+                var img = document.createElement("img");
+                img.classList.add("image-preview");
+                img.file = file;
+                preview.appendChild(img);
+                var reader = new FileReader();
+                reader.onload = (function (aImg) {
+                    return function (e) {
+                        aImg.src = e.target.result;
+                    };
+                })(img);
 
+                reader.readAsDataURL(file);
+            }
+
+        }
+    }
+
+
+</script>

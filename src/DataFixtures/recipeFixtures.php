@@ -6,6 +6,7 @@ use App\Entity\Directions;
 use App\Entity\ImageRecipe;
 use App\Entity\Ingredient;
 use App\Entity\Recipe;
+use App\Entity\User;
 use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -16,12 +17,15 @@ class recipeFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
-       $faker = Faker\Factory::create('fr_FR');
-       $sort = ['kg', 'g', 'cl', 'ml', 'pièces', 'C.a.café', 'C.a.soupe'];
-       $cat = ['entrées', 'plats', 'desserts'];
-       $image =['charcuterie.jpg','cheese.jpg','pancakes.jpg','pizza.jpg','pizza0.jpg','salad.jpg','salmon.jpg','shish-kebab.jpg'];
+        $faker = Faker\Factory::create('fr_FR');
+        $sort = ['kg', 'g', 'cl', 'ml', 'pièces', 'C.a.café', 'C.a.soupe'];
+        $cat = ['entrée', 'plat', 'dessert'];
+        $image =['charcuterie.jpg','cheese.jpg','pancakes.jpg','pizza.jpg','pizza0.jpg','salad.jpg','salmon.jpg','shish-kebab.jpg'];
 
-
+        $user = new User();
+        $user->setRoles(['ROLE_ADMIN']);
+        $user->setEmail('moi@moi.fr');
+        $user->setPassword('$argon2id$v=19$m=65536,t=4,p=1$eWxkVmFLZm12a0ZBc0J2Nw$+GqdPA7lNZ9m0KHSs5okotOwbvAZ9+UWTw73vqhpU9Y');
 
         for ($nbRecipe =1 ; $nbRecipe <= 100 ;$nbRecipe ++){
             $ingredient = [];
@@ -47,8 +51,8 @@ class recipeFixtures extends Fixture
 
             $recipe = new Recipe();
             $x = array_rand($img,1);
+            $recipe->setUser($user);
             $recipe->setImage($img[$x]);
-
             $recipe->setName($faker->sentence($nbWords = 6, $variableNbWords = true));
             $rand1 = array_rand($cat, 1);
             $recipe->setCategory($cat[$rand1]);
@@ -58,7 +62,7 @@ class recipeFixtures extends Fixture
             for ($nb=1 ;$nb <= $faker->numberBetween(6,14); $nb++){
                 $rand = array_rand($ingredient, 1);
                 $recipe->addIngredient($ingredient[$rand]);
-            $manager->persist($recipe);
+                $manager->persist($recipe);
             }
             for ($nbd=1 ;$nbd <= $faker->numberBetween(5,12); $nbd++){
                 $randd = array_rand($direction, 1);

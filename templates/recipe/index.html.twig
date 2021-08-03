@@ -22,7 +22,7 @@
                 <td>{{ recipe.id }}</td>
                 <td>{{ recipe.Name }}</td>
                 <td>{{ recipe.createdDate ? recipe.createdDate|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ recipe.duration ? recipe.duration|date('H:i:s') : '' }}</td>
+                <td>{{ recipe.duration ? recipe.duration|date('H:i') : '' }}</td>
                 <td>{{ recipe.machine }}</td>
                 <td>
                     <a href="{{ path('recipe_show', {'id': recipe.id}) }}">show</a>

@@ -5,9 +5,8 @@ namespace App\Controller;
 use App\Entity\Recipe;
 use App\Repository\RecipeRepository;
 
-use Doctrine\ORM\EntityManagerInterface;
+
 use Knp\Component\Pager\PaginatorInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,13 +15,13 @@ use Symfony\Component\Routing\Annotation\Route;
 class CookingController extends AbstractController
 {
     /**
-     * @Route("/", name="cooking")
+     * @Route("/cooking", name="cooking")
      */
     public function index(Request $request, RecipeRepository $recipeRepository, PaginatorInterface $paginator): Response
     {
-        $data = $recipeRepository->findAll();
-        $recipe = $paginator->paginate($data, $request->query->getInt('page', 1), 12);
 
+        $data = $recipeRepository->findallPublished();
+        $recipe = $paginator->paginate($data, $request->query->getInt('page', 1), 12);
         return $this->render('cooking/index.html.twig', [
             'recipe' => $recipe
         ]);
@@ -70,36 +69,6 @@ class CookingController extends AbstractController
         ]);
     }
 
-    /**
-     * barre de recherche ajax
-     *
-     * @Route("/search/{search}", name="ajax_search", methods={"GET"})
-
-     */
-    public function rechercheAjax($search,Request $request, RecipeRepository $recipeRepository)
-    {
-        $i=$search;
-        $motClef = $request->get('Q');
-
-        $data = $recipeRepository->findbar($motClef);
-
-        if (!$data) {
-            $result['result']['error'] = "Aucun résultat";
-        } else {
-            $result['result'] = $this->getRealEntities($data);
-        }
-//        return new Response(json_encode($result));
-
-    }
-
-    public function getRealEntities($data)
-    {
-
-        foreach ($data as $d) {
-            $realEntities[$d->getId()] = $d->getFoo();
-        }
-        return $realEntities;
-    }
 
 
 }

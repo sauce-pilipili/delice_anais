@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=RecipeRepository::class)
+ * @ORM\Table(name="recipe",indexes={@ORM\Index(columns={"Name","machine"},flags={"fulltext"})})
  */
 class Recipe
 {
@@ -58,6 +59,12 @@ class Recipe
      * @ORM\OneToOne(targetEntity=ImageRecipe::class, inversedBy="recipe", cascade={"persist", "remove"})
      */
     private $image;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="recipes",cascade={"persist"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
 
     public function __construct()
     {
@@ -198,6 +205,18 @@ class Recipe
     public function setImage(?ImageRecipe $image): self
     {
         $this->image = $image;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

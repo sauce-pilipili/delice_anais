@@ -10,7 +10,7 @@
                     <div class="post-preview">
 
                         <a href="{{ path('recipe_show',{'id': r.id}) }}">
-                            <img src="{{ asset('uploads/'~r.image.name) }}">
+                            <img src="{{ asset('uploads/'~r.image.name) }}" style="max-width:640px;max-height: 480px">
                             <h2 class="post-title">{{ r.Name }}</h2>
                             <h3 class="post-subtitle">{{ r.machine }}</h3>
                         </a>

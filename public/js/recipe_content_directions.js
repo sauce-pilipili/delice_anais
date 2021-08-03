@@ -4,6 +4,7 @@ var $collection;
 var $add = $('<a href="#" class="btn btn-success">Ajouter une étape</a>');
 
 $(document).ready(function () {
+
     $collection = $('#directions');//donne la liste a la variable
     $collection.append($add);// append le bouton ajout au collectionHolder
     $collection.data('index', $collection.find('.panel').length)// ajout index
